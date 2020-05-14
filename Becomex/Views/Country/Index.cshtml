@@ -1,0 +1,48 @@
+﻿@model PagedList.IPagedList<Country.Models.Country>
+@using PagedList.Mvc
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Countries</title>
+    <link rel="stylesheet" href="~/Content/Css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/Css/PagedList.css" type="text/css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div>
+            <h3>Countries of the world<br /></h3>
+            <table class="table-striped">
+                <tbody>
+                    @foreach (var country in Model)
+                    {
+                        <tr>
+                            <td hidden>@country.Alpha3Code</td>
+                            <td width="300">
+                                @Html.ActionLink(country.Name, "ViewCountry", new { alpha3Code = country.Alpha3Code })
+                            </td>
+                            <td>
+                                <a href='@Url.Action("ViewCountry", "Country", new { alpha3Code = country.Alpha3Code })'>
+                                    <img src='@Url.Content(@country.Flag)' class="figure-img" width="75" height="50" />
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+            <br />
+
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { pPage = page }))
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+﻿@model Country.Models.Country
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Country Details</title>
+    <link rel="stylesheet" href="~/Content/Css/bootstrap.css" />
+</head>
+<body>
+    <div class="container-md">
+        <h3>Country Details</h3>
+    </div>
+    <br />
+    <div class="container-md">
+        <div class="row ng-scope">
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <b>Name:</b> @Model.Name  <br />
+                    <b>Population:</b> @Model.Population <br />
+                    <b>Capital:</b> @Model.Capital <br />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <img src='@Url.Content(Model.Flag)' class="figure-img" width="150" height="100" />
+                </div>
+            </div>
+        </div>
+        <div class="row ng-scope">
+            <div class="col-md-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Land Borders</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var border in Model.Borders)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href='@Url.Action("ViewCountry", "Country", new { alpha3Code = @border })'>@border</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Time Zones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var timeZone in Model.TimeZones)
+                            {
+                                <tr>
+                                    <td>@timeZone</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Currencies</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var currency in Model.Currencies)
+                            {
+                                <tr>
+                                    <td>@currency.Name (@currency.Symbol) </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Languages</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var languages in Model.Languages)
+                            {
+                                <tr class="ng-scope">
+                                    <td>@languages.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            @Html.ActionLink("Exit", "Index", "Country", null, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</body>
+</html>
